@@ -7,12 +7,6 @@ pipeline{
         EC_IP=credentials('ip-for-test-cicd')
     }
     stages{
-        stage("Copy repo on Node"){
-            steps{
-                echo "=======Copy repo on Node======="
-                git clone branch: 'main', url: 'https://github.com/andrii-br/CI-CD-Jenkins-AWS.git'
-            }
-        }
         stage("SSH connection with EC2"){
             steps{
                 withCredentials([sshUserPrivateKey(credentialsId: 'ec2-frankfurt-aws', keyFileVariable: 'SSH_KEY')]){
