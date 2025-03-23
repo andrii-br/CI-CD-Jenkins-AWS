@@ -10,13 +10,14 @@ pipeline{
         stage("SSH connection with EC2"){
             steps{
                 withCredentials([sshUserPrivateKey(credentialsId: 'ec2-frankfurt-aws', keyFileVariable: 'SSH_KEY')]){
-                    sh '''
-                    ''' ssh -o StrictHostKeyChecking=no -i $SSH_KEY ubuntu@$EC_IP <<EOF
-                    echo "ALL GOOD"
-                    git clone branch: 'main', url: 'https://github.com/andrii-br/CI-CD-Jenkins-AWS.git'
-                    sh 'docker build .'
-                    sh sleep 5
-                    sh 'docker compose up -d'
+                    sh """#!/bin/bash
+                        ssh -o StrictHostKeyChecking=no -i \$SSH_KEY \$SSH_USER@\$EC_IP <<'EOF'
+                        echo "Hello from remote server"
+                        mkdir -p ~/my-app
+                        cd ~/my-app
+                        echo "Deploying..."
+                        EOF
+                    """
                 }
             }
         }
