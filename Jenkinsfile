@@ -4,7 +4,6 @@ pipeline{
     }
     environment {
         SSH_KEY=credentials('ec2-frankfurt-aws')
-        EC_IP=credentials('ip-for-test-cicd')
     }
     stages {
         stage("SSH connection with EC2") {
@@ -16,7 +15,7 @@ pipeline{
                 )
             ]) {
                 sh """#!/bin/bash
-                ssh -o StrictHostKeyChecking=no -i \$SSH_KEY ubuntu@\$EC_IP <<'EOF'
+                ssh -o StrictHostKeyChecking=no -i \$SSH_KEY ubuntu@52.59.171.99 <<'EOF'
                 git branch: 'main', url: 'https://github.com/andrii-br/CI-CD-Jenkins-AWS.git' 
                 sleep 5
                 docker build .
