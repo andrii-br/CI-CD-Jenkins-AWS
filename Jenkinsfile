@@ -15,7 +15,7 @@ pipeline{
                 )
             ]) {
                 sh """#!/bin/bash
-                ssh -o StrictHostKeyChecking=no -i \$SSH_KEY ubuntu@52.59.171.99 <<'EOF'
+                ssh -o StrictHostKeyChecking=no -i \$SSH_KEY @9 <<'EOF'
                 git branch: 'main', url: 'https://github.com/andrii-br/CI-CD-Jenkins-AWS.git' 
                 sleep 5
                 docker build .
